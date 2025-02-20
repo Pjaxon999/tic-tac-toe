@@ -2,7 +2,7 @@
     --bg-main-color: #213555;
     --bg-game-color: #D8C4B6;
     --text-color: #F5EFE7;
-    --card-text-color: #3E5879;
+    --border-color: #3E5879;
     --box-shadow: 0 0 5px 5px rgba(0,0,0,0.2);
 }
 
@@ -15,12 +15,14 @@ h1 {
     font-size: 2.5em;
     line-height: calc(1ex / 0.42);
     margin: calc(1ex / 0.42) 0;
+    text-align: center;
 }
 
 h2 {
     font-size: 2em;
     line-height: calc(1ex / 0.42);
     margin: calc(1ex / 0.42) 0;
+    text-align: center;
 }
 
 p {
@@ -31,13 +33,23 @@ p {
 
 .board {
     display: grid;
-    height: 100px;
-    width: 100px;
+    height: 250px;
+    width: 250px;
     grid-template-columns: repeat(3, 1fr);
     background-color: var(--bg-game-color);
     color: var(--card-text-color);
     box-shadow: var(--box-shadow);
     margin: 0px auto;
+}
+
+.cell {
+    border: 1px solid var(--border-color);
+}
+
+.reset-btn {
+    display: flex;
+    justify-content: center;
+    padding: 1em;
 }
 
 footer {

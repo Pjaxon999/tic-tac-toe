@@ -1,20 +1,20 @@
 // Test external link
 console.log("Here I am! Tic me like a Tac Toe!");
 
-// Store and update gameboard state
+// Store and update gameboard state. Should be able to retrieve board state,
+// add an X or O, and read the board state out to the console
 function gameState() {
     // store the "board", should start as empty
     const boardSpace = ['', '', '', '', '', '', '', '', ''];
-    // please don't do things if the game is over
-    if (gameOver = true) {
-        return
-    }
 
 
 };
 
 // Logic for when a round is played
 function moveMade() {
+    if (gameOver = true){
+        return
+    }
 
 };
 
