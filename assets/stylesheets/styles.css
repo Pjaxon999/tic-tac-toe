@@ -40,10 +40,16 @@ p {
     color: var(--card-text-color);
     box-shadow: var(--box-shadow);
     margin: 0px auto;
+    touch-action: manipulation;
 }
 
 .cell {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     border: 1px solid var(--border-color);
+    color: var(--bg-main-color);
+    touch-action: manipulation;
 }
 
 .reset-btn {
