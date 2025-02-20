@@ -1,6 +1,6 @@
 :root {
     --bg-main-color: #213555;
-    --bg-card-color: #D8C4B6;
+    --bg-game-color: #D8C4B6;
     --text-color: #F5EFE7;
     --card-text-color: #3E5879;
     --box-shadow: 0 0 5px 5px rgba(0,0,0,0.2);
@@ -9,10 +9,6 @@
 html {
     background-color: var(--bg-main-color);
     color: var(--text-color);
-}
-
-#gitimg {
-    height: 25px;
 }
 
 h1 {
@@ -33,10 +29,25 @@ p {
     margin: calc(1ex / 0.32);
 }
 
+.board {
+    display: grid;
+    height: 100px;
+    width: 100px;
+    grid-template-columns: repeat(3, 1fr);
+    background-color: var(--bg-game-color);
+    color: var(--card-text-color);
+    box-shadow: var(--box-shadow);
+    margin: 0px auto;
+}
+
 footer {
     position: fixed;
     left: 0;
     bottom: 0;
     width: 100%;
     text-align: center;
+}
+
+#gitimg {
+    height: 25px;
 }
