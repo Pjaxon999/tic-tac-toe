@@ -50,6 +50,9 @@ p {
     border: 1px solid var(--border-color);
     color: var(--bg-main-color);
     touch-action: manipulation;
+    width: 83.3px;
+    height: 83.3px;
+    font-size: 2em;
 }
 
 .reset-btn {
