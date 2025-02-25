@@ -13,13 +13,13 @@ function boardState(){
 
 function gameState(){
     const board = boardState();
-    const playerTurn = "X";
+    let playerTurn = "X";
+    let gameOver = false;
+
     const getPlayer = () => playerTurn;
 
-    // Loop through each combination in winningCombinations.
-    // For each combination, check if all three indices in the board array have the same value (X or O).
-    // If any combination meets this condition, return true (a winner exists).
-    // Check to see if anyone has won or if there is a draw
+    const changePlayer = () => playerTurn = playerTurn === "X" ? "O" : "X";
+
     const winningCombinations = [
         [0,1,2],[3,4,5],[6,7,8], // rows
         [0,3,6],[1,4,7],[2,5,8], // verts
@@ -31,17 +31,24 @@ function gameState(){
     }
 
     const makeMove = (space) => {
-        if (gameOver === true || board[space] !== '' || space < 0 || space >= board.length){
+        if (gameOver === true || board.getBoard()[space] !== '' || space < 0 || space >= board.getBoard().length){
             return
         } else {
-            board[space] = playerTurn;
+            board.getBoard()[space] = playerTurn;
             console.log(board);
             gameEndCheck();
-            playerTurn = playerTurn === "X" ? "O" : "X";
         }
+        changePlayer();
     };
 
-    return {getPlayer};
+    const resetGame = () => {
+        board.reset();
+        gameOver = false;
+        playerTurn = "X";
+        console.log("Game reset. Current board:", board.getBoard());
+    };
+
+    return {getPlayer, resetGame, makeMove};
 }
 
 function render(){
