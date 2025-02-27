@@ -13,15 +13,14 @@ function boardState(){
 };
 
 function gameState(){
-    // Store the board state, initialize variables to 
-    // track the game state
     const board = boardState();
+    const exportBoard = () => board.getBoard();
     let playerTurn = "X";
     let gameOver = false;
     
 
     const getPlayer = () => playerTurn;
-
+    const isGameOver = () => gameOver;
     const changePlayer = () => playerTurn = playerTurn === "X" ? "O" : "X";
 
     function declareWin(){
@@ -91,27 +90,76 @@ function gameState(){
         console.log("Game reset. Current board:", board.getBoard());
     };
 
-    return {getPlayer, resetGame, makeMove};
+    return {getPlayer, isGameOver, resetGame, makeMove, exportBoard};
 }
 
 function render(){
-    // Need the board to render the board.
-    const board = boardState();
+    // Need the game state to render the game.
+    const game = gameState();
+    // Need to grab DOM elements for rendering
+    const turnDisplay = document.querySelector(".player-name");
+    const gridCells = document.querySelectorAll(".cell");
+    const resetBtn = document.querySelector(".reset-button");
+    const nameInput = document.querySelector(".name-input");
+    const confirmButton = document.getElementById("confirm-btn")
+    // let players put in their names before the game starts
+    nameInput.showModal();
+    confirmButton.addEventListener("click", function(event){
+        event.preventDefault();
+        player1.name = document.getElementById("player1").value;
+        player2.name = document.getElementById("player2").value;
+        nameInput.close();
+        updateUi();
+    });
+    // add event listeners to buttons
+    gridCells.forEach((button) => button.addEventListener("click", boardClickHandler));
+    resetBtn.addEventListener("click", resetClickHandler);
 
+    function playerNameDisplay(){
+        if (game.isGameOver() === true){
+            return
+        }
+        if (game.getPlayer() === "X"){
+            turnDisplay.textContent = `It is ${player1.name}'s Turn`;
+        } else {
+            turnDisplay.textContent = `It is ${player2.name}'s Turn`;
+        }
+    }
 
-    // The names that players input are only relevant to the UI, no need
-    // keep track of them in the game logic as long as switching the player's
-    // turn works. 
+    function boardDisplay(){
+        let updatedBoard = game.exportBoard();
+        for (let i=0; i < gridCells.length; i++){
+            gridCells[i].textContent = updatedBoard[i];
+        }
+    }
+
+    function updateUi(){
+       playerNameDisplay();
+       boardDisplay();    
+    }
+
+    function boardClickHandler(e){
+        let index = e.target.getAttribute("data-index");
+        game.makeMove(index);
+        updateUi();
+    }
+
+    // sends the signal to reset the game and update the UI.
+    function resetClickHandler(){
+        game.resetGame();
+        updateUi();
+    }
+    // The names that players input are only relevant to the UI.
     let player1 = {
-        name: "",
-        mark: "X",
+        name: "Player 1",
         winCount: 0
     }
     let player2 = {
-        name: "",
-        mark: "O",
+        name: "Player 2",
         winCount: 0
     }
+    
+    updateUi();
 }
 
-const playGame = gameState();
+render();
