@@ -6,7 +6,7 @@ function boardState(){
         console.log("The game has been reset");
     };
 
-    // Allow the board to be updated from elsewhere
+    // The board is needed elsewhere
     const getBoard = () => board;
 
     return {reset, getBoard};
@@ -17,22 +17,22 @@ function gameState(){
     // track the game state
     const board = boardState();
     let playerTurn = "X";
-    let player1 = {
-        name : "",
-        mark : "X",
-        winCount: 0
-    }
-    let player2 = {
-        name: "",
-        mark: "O",
-        winCount: 0
-    }
     let gameOver = false;
     
 
     const getPlayer = () => playerTurn;
 
     const changePlayer = () => playerTurn = playerTurn === "X" ? "O" : "X";
+
+    function declareWin(){
+        if (playerTurn === "X"){
+            console.log("Player X is the winner!");
+            gameOver = true;
+        } else {
+            console.log("Player O is the winner!");
+            gameOver = true;
+        }
+    }
 
     const winningCombinations = [
         [0,1,2],[3,4,5],[6,7,8], // rows
@@ -58,14 +58,14 @@ function gameState(){
     function gameEndCheck(array, combos) {
         for (const combo of combos) {
             if (combo.every(index => array.includes(index))) {
-                declareGameOver();            
-                return true;
+                declareWin();            
             }
          }
-        if (array.includes("")){
-            return false;
+        indexToCheck = [];
+        if (board.getBoard().includes('')){
+            return;
         } else {
-            declareGameOver();
+            console.log("draw!");
         }
     }
 
@@ -95,6 +95,23 @@ function gameState(){
 }
 
 function render(){
-    // render relevant game state and board state information to the UI
+    // Need the board to render the board.
+    const board = boardState();
+
+
+    // The names that players input are only relevant to the UI, no need
+    // keep track of them in the game logic as long as switching the player's
+    // turn works. 
+    let player1 = {
+        name: "",
+        mark: "X",
+        winCount: 0
+    }
+    let player2 = {
+        name: "",
+        mark: "O",
+        winCount: 0
+    }
 }
 
+const playGame = gameState();
