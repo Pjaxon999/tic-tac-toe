@@ -53,12 +53,23 @@ button {
     text-align: center;
 }
 
+.inputs {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+    max-width: 300px;
+    width: 90%;
+    margin: 0 auto;
+}
+
 #intro-screen label {
     font-size: 1.2em;
-    margin-bottom: 0.5em;
+    display: block;
 }
 
 #intro-screen input {
+    display: block;
+    width: 100%;
     font-size: 1em;
     padding: 0.5em;
     border: 1px solid var(--border-color);
@@ -69,6 +80,9 @@ button {
 }
 
 #intro-screen button {
+    display: block;
+    width: 100%;
+    text-align: center;
     padding: 0.5em 1em;
     background-color: var(--bg-game-color);
     color: var(--bg-main-color);
