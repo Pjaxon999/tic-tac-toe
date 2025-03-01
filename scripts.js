@@ -3,7 +3,6 @@ function boardState(){
 
     const reset = () => {
         board = ['', '', '', '', '', '', '', '', ''];
-        console.log("The game has been reset");
     };
 
     // The board is needed elsewhere
@@ -17,19 +16,20 @@ function gameState(){
     const exportBoard = () => board.getBoard();
     let playerTurn = "X";
     let gameOver = false;
+    let endState = "";
     
-
     const getPlayer = () => playerTurn;
     const isGameOver = () => gameOver;
     const changePlayer = () => playerTurn = playerTurn === "X" ? "O" : "X";
+    const getEndState = () => endState;
 
     function declareWin(){
         if (playerTurn === "X"){
-            console.log("Player X is the winner!");
             gameOver = true;
+            endState = "p1win";
         } else {
-            console.log("Player O is the winner!");
             gameOver = true;
+            endState ="p2win";
         }
     }
 
@@ -45,7 +45,7 @@ function gameState(){
     let indexToCheck = [];
     function indexReturner (array){
         
-        for (i = 0; i < array.length; i++) {
+        for (let i = 0; i < array.length; i++) {
             if (playerTurn === "X" && array[i] === "X") {
                 indexToCheck.push(i);
             } else if (playerTurn === "O" && array[i] ==="O"){
@@ -55,16 +55,21 @@ function gameState(){
     }
 
     function gameEndCheck(array, combos) {
+        let winFound = false;
         for (const combo of combos) {
             if (combo.every(index => array.includes(index))) {
-                declareWin();            
+                declareWin();
+                winFound = true;
+                break;
             }
-         }
+        }
         indexToCheck = [];
-        if (board.getBoard().includes('')){
-            return;
-        } else {
-            console.log("draw!");
+        if (winFound === true) return;
+    
+        // Check for draw only if no win and board is full
+        if (!board.getBoard().includes('')) {
+            endState = "draw";
+            gameOver = true;
         }
     }
 
@@ -76,24 +81,23 @@ function gameState(){
             return
         } else {
             board.getBoard()[space] = playerTurn;
-            console.log(board.getBoard());
             indexReturner(board.getBoard());
             gameEndCheck(indexToCheck, winningCombinations);
+            changePlayer();
         }
-        changePlayer();
     };
 
     const resetGame = () => {
         board.reset();
         gameOver = false;
+        endState = "";
         playerTurn = "X";
-        console.log("Game reset. Current board:", board.getBoard());
     };
 
-    return {getPlayer, isGameOver, resetGame, makeMove, exportBoard};
+    return {getPlayer, isGameOver, resetGame, makeMove, exportBoard, getEndState};
 }
 
-function render(){
+const render = (function () {
     // Need the game state to render the game.
     const game = gameState();
     // Need to grab DOM elements for rendering
@@ -103,10 +107,15 @@ function render(){
     const gridCells = document.querySelectorAll(".cell");
     const resetBtn = document.querySelector(".reset-button");
     const startBtn = document.getElementById("start-btn");
+
+    // The names that players input are only relevant to the UI.
+    let player1 = {name: "Player 1"};
+    let player2 = {name: "Player 2"};
+
     // let players put in their names before the game starts, trigger transition, switch displays
     startBtn.addEventListener("click", () => {
-        player1.name = document.getElementById("player1").value;
-        player2.name = document.getElementById("player2").value;
+        player1.name = document.getElementById("player1").value || "Player 1";
+        player2.name = document.getElementById("player2").value || "Player 2";
         introScreen.classList.add("hidden");
         introScreen.addEventListener("transitionend", () => {
             introScreen.style.display = "none";
@@ -139,8 +148,26 @@ function render(){
         }
     }
 
+    // Check to see if the game is still going, if it has ended, read the 
+    // end state and react accordingly
+    function checkState() {
+        if (game.isGameOver() === false) return;
+        switch (game.getEndState()) {
+            case "draw":
+                turnDisplay.textContent = "It's a draw!";
+                break;
+            case "p1win":
+                turnDisplay.textContent = `${player1.name} wins!`;
+                break;
+            case "p2win": 
+                turnDisplay.textContent = `${player2.name} wins!`;
+                break;
+        }
+    }
+
     function updateUi(){
        playerNameDisplay();
+       checkState();
        boardDisplay();    
     }
 
@@ -155,17 +182,6 @@ function render(){
         game.resetGame();
         updateUi();
     }
-    // The names that players input are only relevant to the UI.
-    let player1 = {
-        name: "Player 1",
-        winCount: 0
-    }
-    let player2 = {
-        name: "Player 2",
-        winCount: 0
-    }
-    
-    updateUi();
-}
 
-render();
+    updateUi();
+})();

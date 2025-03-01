@@ -27,10 +27,6 @@ p {
     font-size: 1em;
 }
 
-button {
-    color: var(--bg-main-color);
-}
-
 .hidden {
     opacity: 0;
     pointer-events: none;
@@ -43,7 +39,7 @@ button {
 }
 
 #intro-screen {
-    height: 100dvh;
+    height: 100%;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -113,6 +109,11 @@ button {
     width: 80px;
     height: 80px;
     font-size: 2em;
+    transition-duration: 0.5s;
+}
+
+.cell:hover {
+    background-color: #d3d3d3;
 }
 
 .reset-container {
