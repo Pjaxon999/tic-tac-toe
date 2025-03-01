@@ -11,46 +11,44 @@
 
 <body>
 
-<header>
-<h1>Tic Tac Toe</h1>
-</header>
-
-<h2 class="player-name">Here We Go!</h2>
-
-<div class="board">
-    <button class="cell" data-index="0"></button>
-    <button class="cell" data-index="1"></button>
-    <button class="cell" data-index="2"></button>
-    <button class="cell" data-index="3"></button>
-    <button class="cell" data-index="4"></button>
-    <button class="cell" data-index="5"></button>
-    <button class="cell" data-index="6"></button>
-    <button class="cell" data-index="7"></button>
-    <button class="cell" data-index="8"></button>
-</div>
-
-<div class="reset-container">
-    <button class="reset-button">Reset</button>
-</div>
-
-<dialog class="name-input">
-    <form id="name-form" method="dialog">
-        <div class="form-section">
-            <label for="player1">Player 1 (X goes first)</label>
-            <input type="text" name="player1" id="player1" placeholder="Enter Name" autocomplete="off" autofocus required>
-        </div>
-        <div class="form-section">
-            <label for="player2">Player 2 (O goes second)</label>
-            <input type="text" name="player2" id="player2" placeholder="Enter Name" autocomplete="off" required>
-        </div>
-    </form>
-    <div class="form-section">
-        <button id="confirm-btn" type="submit" value="default">Confirm</button>
+<div id="intro-screen">
+    <div class="inputs">
+    <h1>Prepare for Tic Tac Toe!</h1>
+    <label for="player1" id="label-player1">Player 1 (X) Name:</label>
+    <input type="text" id="player1" aria-labelledby="label-player1">
+    <label for="player2" id="label-player2">Player 2 (O) Name:</label>
+    <input type="text" id="player2" aria-labelledby="label-player2">
+    <button id="start-btn">Start Game</button>
     </div>
-</dialog>
+</div>
 
-<footer>
-    <p>Made by Peter Jackson <a href="https://github.com/Pjaxon999/tic-tac-toe"><img id="gitimg" src="./assets/images/github-svgrepo-com.svg"></a></p>
-</footer>
+<div id="game-screen" class="hidden"> 
+    <header>
+    <h1>Tic Tac Toe</h1>
+    </header>
+
+    <h2 class="player-name">Here We Go!</h2>
+
+    <div class="board">
+        <button class="cell" data-index="0"></button>
+        <button class="cell" data-index="1"></button>
+        <button class="cell" data-index="2"></button>
+        <button class="cell" data-index="3"></button>
+        <button class="cell" data-index="4"></button>
+        <button class="cell" data-index="5"></button>
+        <button class="cell" data-index="6"></button>
+        <button class="cell" data-index="7"></button>
+        <button class="cell" data-index="8"></button>
+    </div>
+
+    <div class="reset-container">
+        <button class="reset-button">Reset</button>
+    </div>
+
+    <footer>
+        <p>Made by Peter Jackson <a href="https://github.com/Pjaxon999/tic-tac-toe"><img id="gitimg" src="./assets/images/github-svgrepo-com.svg"></a></p>
+    </footer>
+</div>
+
 </body>
 </html>

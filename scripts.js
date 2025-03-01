@@ -97,19 +97,25 @@ function render(){
     // Need the game state to render the game.
     const game = gameState();
     // Need to grab DOM elements for rendering
+    const introScreen = document.getElementById("intro-screen");
+    const gameScreen = document.getElementById("game-screen");
     const turnDisplay = document.querySelector(".player-name");
     const gridCells = document.querySelectorAll(".cell");
     const resetBtn = document.querySelector(".reset-button");
-    const nameInput = document.querySelector(".name-input");
-    const confirmButton = document.getElementById("confirm-btn")
-    // let players put in their names before the game starts
-    nameInput.showModal();
-    confirmButton.addEventListener("click", function(event){
-        event.preventDefault();
+    const startBtn = document.getElementById("start-btn");
+    // let players put in their names before the game starts, trigger transition, switch displays
+    startBtn.addEventListener("click", () => {
         player1.name = document.getElementById("player1").value;
         player2.name = document.getElementById("player2").value;
-        nameInput.close();
-        updateUi();
+        introScreen.classList.add("hidden");
+        introScreen.addEventListener("transitionend", () => {
+            introScreen.style.display = "none";
+            gameScreen.style.display = "block";
+            setTimeout(() => {
+                gameScreen.classList.add("visible");
+                updateUi();
+            }, 10);
+        }, {once : true});
     });
     // add event listeners to buttons
     gridCells.forEach((button) => button.addEventListener("click", boardClickHandler));
